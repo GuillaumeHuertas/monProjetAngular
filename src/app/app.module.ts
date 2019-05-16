@@ -13,12 +13,16 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthService } from './Services/auth.service';
 import { SingleAppareilComponent } from './single-appareil/single-appareil.component';
 import { FourOhFourComponent } from './four-oh-four/four-oh-four.component';
+import { AuthGuard } from './Services/auth-guard.service';
 
 const appRoutes: Routes = [
-  { path: 'appareils', component: AppareilViewComponent },
-  { path: 'appareils/:id', component: SingleAppareilComponent },
+  { path: 'appareils', canActivate: [AuthGuard], component: AppareilViewComponent },
+  { path: 'appareils/:id', canActivate: [AuthGuard], component: SingleAppareilComponent },
   { path: 'auth', component: AuthComponent },
-  { path: '', component: AppareilViewComponent },
+  // Dans certain vas mettre le full sinon erreur
+  { path: '', redirectTo: 'appareils', pathMatch: 'full' },
+  // Identique à la ligne du dessus sans redirection
+  //{ path: '', component: AppareilViewComponent },
   { path: 'not-found', component: FourOhFourComponent},
   { path: '**', redirectTo: '/not-found' }
 ];
@@ -40,7 +44,8 @@ const appRoutes: Routes = [
   ],
   providers: [
     AppareilService,
-    AuthService
+    AuthService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })
