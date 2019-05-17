@@ -58,5 +58,24 @@ export class AppareilService {
           this.appareils[i].status = 'éteint';
           this.emitAppareilSubject(); 
       }
+
+      addAppareil(name: string, status: string) {
+        // On instancie un nouvel appareil
+        const appareilObject = {
+          id: 0,
+          name: '',
+          status: ''
+        }; 
+        // Récupère le nom et status de l'appareil 
+        appareilObject.name = name;
+        appareilObject.status = status; 
+        // Prend le dernier id de la liste et ajoute + 1
+        appareilObject.id = this.appareils[(this.appareils.length - 1)].id +1; 
+
+        // ajoute le nouvel appareil à la liste
+        this.appareils.push(appareilObject); 
+        // Emet le subject
+        this.emitAppareilSubject(); 
+      }
   
 }
