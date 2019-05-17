@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { MonPremierComponent } from './mon-premier/mon-premier.component';
 import { AppareilComponent } from './appareil/appareil.component';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 
 import { AppareilService } from './Services/appareil.service';
 import { AuthComponent } from './auth/auth.component';
@@ -15,12 +15,15 @@ import { SingleAppareilComponent } from './single-appareil/single-appareil.compo
 import { FourOhFourComponent } from './four-oh-four/four-oh-four.component';
 import { AuthGuard } from './Services/auth-guard.service';
 import { EditAppareilComponent } from './edit-appareil/edit-appareil.component';
+import { UserService } from './Services/user.service';
+import { UserListComponent } from './user-list/user-list.component';
 
 const appRoutes: Routes = [
   { path: 'appareils', canActivate: [AuthGuard], component: AppareilViewComponent },
   { path: 'appareils/:id', canActivate: [AuthGuard], component: SingleAppareilComponent },
   { path: 'edit', canActivate: [AuthGuard], component: EditAppareilComponent },
   { path: 'auth', component: AuthComponent },
+  { path: 'users', component: UserListComponent },
   // Dans certain vas mettre le full sinon erreur
   { path: '', redirectTo: 'appareils', pathMatch: 'full' },
   // Identique à la ligne du dessus sans redirection
@@ -38,17 +41,20 @@ const appRoutes: Routes = [
     AppareilViewComponent,
     SingleAppareilComponent,
     FourOhFourComponent,
-    EditAppareilComponent
+    EditAppareilComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule, 
     FormsModule,
+    ReactiveFormsModule, 
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
     AppareilService,
     AuthService,
-    AuthGuard
+    AuthGuard,
+    UserService
   ],
   bootstrap: [AppComponent]
 })
