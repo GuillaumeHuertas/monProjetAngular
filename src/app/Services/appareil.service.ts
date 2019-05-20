@@ -1,26 +1,16 @@
 import { Subject } from 'rxjs/Subject';
+import { HttpClient } from '@angular/common/http'; 
+import { Injectable } from '@angular/core';
+import { componentNeedsResolution } from '@angular/core/src/metadata/resource_loading';
 
+@Injectable()
 export class AppareilService {
 
   appareilsSubject = new Subject<any[]>(); 
 
-    private appareils = [
-        {
-          id: 1, 
-          name: 'Machine à laver',
-          status: 'éteint'
-        },
-        {
-          id: 2,
-          name: 'Frigo',
-          status: 'allumé'
-        },
-        {
-          id: 3,
-          name: 'Ordinateur',
-          status: 'éteint'
-        }
-      ];
+    private appareils = [];
+
+      constructor(private httpClient : HttpClient) {}
 
       getAppareilById(id: number) {
         const appareil = this.appareils.find(
@@ -76,6 +66,33 @@ export class AppareilService {
         this.appareils.push(appareilObject); 
         // Emet le subject
         this.emitAppareilSubject(); 
+      }
+
+      saveAppareilsToServeur() {
+        this.httpClient
+        .put('https://http-client-demo-c4a11.firebaseio.com/appareils.json', this.appareils)
+        .subscribe(
+          () => {
+            console.log('Enregistrement terminé !');
+          },
+          (error) => {
+            console.log('Erreur de sauvegarde ! ' + error); 
+          }
+        ) 
+      }
+
+      getAppareilsFromServeur() {
+        this.httpClient
+        .get<any[]>('https://http-client-demo-c4a11.firebaseio.com/appareils.json')
+        .subscribe(
+          (response) => {
+            this.appareils = response; 
+            this.emitAppareilSubject(); 
+          },
+          (error) => {
+            console.log('Erreur de chargement ! ' + error); 
+          }
+        );
       }
   
 }

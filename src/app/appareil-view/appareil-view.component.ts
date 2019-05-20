@@ -32,6 +32,8 @@ export class AppareilViewComponent implements OnInit, OnDestroy {
       }
     );
     this.appareilService.emitAppareilSubject(); 
+    // Permet de charger automatiquement les appareils enregistrés sur le serveur
+    this.appareilService.getAppareilsFromServeur(); 
   }
 
   onAllumer() {
@@ -44,6 +46,14 @@ export class AppareilViewComponent implements OnInit, OnDestroy {
     } else {
       return null;
     }
+  }
+
+  onSave() {
+    this.appareilService.saveAppareilsToServeur(); 
+  }
+
+  onFetch() {
+    this.appareilService.getAppareilsFromServeur(); 
   }
 
   ngOnDestroy() {
