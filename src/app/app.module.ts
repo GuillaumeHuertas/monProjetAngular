@@ -17,6 +17,7 @@ import { AuthGuard } from './Services/auth-guard.service';
 import { EditAppareilComponent } from './edit-appareil/edit-appareil.component';
 import { UserService } from './Services/user.service';
 import { UserListComponent } from './user-list/user-list.component';
+import { NewUserComponent } from './new-user/new-user.component';
 
 const appRoutes: Routes = [
   { path: 'appareils', canActivate: [AuthGuard], component: AppareilViewComponent },
@@ -24,6 +25,7 @@ const appRoutes: Routes = [
   { path: 'edit', canActivate: [AuthGuard], component: EditAppareilComponent },
   { path: 'auth', component: AuthComponent },
   { path: 'users', component: UserListComponent },
+  { path: 'new-user', component: NewUserComponent},
   // Dans certain vas mettre le full sinon erreur
   { path: '', redirectTo: 'appareils', pathMatch: 'full' },
   // Identique à la ligne du dessus sans redirection
@@ -42,7 +44,8 @@ const appRoutes: Routes = [
     SingleAppareilComponent,
     FourOhFourComponent,
     EditAppareilComponent,
-    UserListComponent
+    UserListComponent,
+    NewUserComponent
   ],
   imports: [
     BrowserModule, 
