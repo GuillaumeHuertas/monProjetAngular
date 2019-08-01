@@ -1,5 +1,8 @@
 # MonProjetAngular
 
+Application domotique : Angular Frontend et Firebase en Backend
+
+
 Application de domotique avec un front en Angular 7 qui persiste sur un backend firebase
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
